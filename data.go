@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"sort"
 	"sync"
@@ -281,6 +282,15 @@ func (s *SessionManager) Keys(ctx context.Context) []string {
 
 	sort.Strings(keys)
 	return keys
+}
+
+// GetToken retrieves the session token for current session,
+// and returns a token string.
+func (s *SessionManager) GetToken(ctx context.Context, token string) (string, error) {
+	if s, ok := ctx.Value(s.contextKey).(*sessionData); ok {
+		return s.token, nil
+	}
+	return "", errors.New("no valid session found")
 }
 
 // RenewToken updates the session data to have a new session token while
