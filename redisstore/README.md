@@ -1,6 +1,6 @@
 # redisstore
 
-A Redis-based session store for [SCS](https://github.com/alexedwards/scs) using the popular [redigo](https://github.com/gomodule/redigo) driver.
+A Redis-based session store for [SCS](https://github.com/svkoh/scs) using the popular [redigo](https://github.com/gomodule/redigo) driver.
 
 ## Example
 
@@ -13,8 +13,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/alexedwards/scs/v2"
-	"github.com/alexedwards/scs/redisstore"
+	"github.com/svkoh/scs/v2"
+	"github.com/svkoh/scs/redisstore"
 	"github.com/gomodule/redigo/redis"
 )
 

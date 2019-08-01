@@ -1,6 +1,6 @@
 # boltstore
 
-A BoltDB-based session store for [SCS](https://github.com/alexedwards/scs) using the [go.etcd.io/bbolt](https://github.com/etcd-io/bbolt) package.
+A BoltDB-based session store for [SCS](https://github.com/svkoh/scs) using the [go.etcd.io/bbolt](https://github.com/etcd-io/bbolt) package.
 
 ## Example
 
@@ -15,8 +15,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/alexedwards/scs/v2"
-	"github.com/alexedwards/scs/boltstore"
+	"github.com/svkoh/scs/v2"
+	"github.com/svkoh/scs/boltstore"
 	"go.etcd.io/bbolt"
 )
 

@@ -1,6 +1,6 @@
 # memstore
 
-An in-memory session store for [SCS](https://github.com/alexedwards/scs).
+An in-memory session store for [SCS](https://github.com/svkoh/scs).
 
 
 Because memstore uses in-memory storage only, all session data will be lost when your application is stopped or restarted. Therefore it should only be used in applications where data loss is an acceptable trade off for fast performance, or for prototyping and testing purposes.
@@ -14,8 +14,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/alexedwards/scs/v2"
-	"github.com/alexedwards/scs/v2/memstore"
+	"github.com/svkoh/scs/v2"
+	"github.com/svkoh/scs/v2/memstore"
 )
 
 var sessionManager *scs.SessionManager
