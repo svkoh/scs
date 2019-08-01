@@ -3,13 +3,13 @@ package scs
 import (
 	"bytes"
 	"context"
-	"crypto/rand"
-	"encoding/base64"
-	"encoding/gob"
+	"encoding/json"
 	"fmt"
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
 // Status represents the state of the session data during a request cycle.
@@ -57,14 +57,26 @@ func (s *SessionManager) Load(ctx context.Context, token string) (context.Contex
 	}
 
 	if token == "" {
-		return s.addSessionDataToContext(ctx, newSessionData(s.Lifetime)), nil
+		sess := newSessionData(s.Lifetime)
+		t, err := generateToken()
+		if err != nil {
+			return nil, err
+		}
+		sess.token = t
+		return s.addSessionDataToContext(ctx, sess), nil
 	}
 
 	b, found, err := s.Store.Find(token)
 	if err != nil {
 		return nil, err
 	} else if !found {
-		return s.addSessionDataToContext(ctx, newSessionData(s.Lifetime)), nil
+		sess := newSessionData(s.Lifetime)
+		t, err := generateToken()
+		if err != nil {
+			return nil, err
+		}
+		sess.token = t
+		return s.addSessionDataToContext(ctx, sess), nil
 	}
 
 	sd := &sessionData{
@@ -479,7 +491,8 @@ func (s *SessionManager) getSessionDataFromContext(ctx context.Context) *session
 
 func (sd *sessionData) encode() ([]byte, error) {
 	var b bytes.Buffer
-	err := gob.NewEncoder(&b).Encode(sd)
+	// err := gob.NewEncoder(&b).Encode(sd)
+	err := json.NewEncoder(&b).Encode(sd)
 	if err != nil {
 		return nil, err
 	}
@@ -489,16 +502,16 @@ func (sd *sessionData) encode() ([]byte, error) {
 
 func (sd *sessionData) decode(b []byte) error {
 	r := bytes.NewReader(b)
-	return gob.NewDecoder(r).Decode(sd)
+	// return gob.NewDecoder(r).Decode(sd)
+	return json.NewDecoder(r).Decode(sd)
 }
 
 func generateToken() (string, error) {
-	b := make([]byte, 32)
-	_, err := rand.Read(b)
+	u2, err := uuid.NewV4()
 	if err != nil {
 		return "", err
 	}
-	return base64.RawURLEncoding.EncodeToString(b), nil
+	return u2.String(), nil
 }
 
 type contextKey string
