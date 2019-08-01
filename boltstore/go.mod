@@ -1,4 +1,4 @@
-module github.com/alexedwards/scs/boltstore
+module github.com/svkoh/scs/boltstore
 
 go 1.12
 

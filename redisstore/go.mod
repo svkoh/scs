@@ -1,4 +1,4 @@
-module github.com/alexedwards/scs/redisstore
+module github.com/svkoh/scs/redisstore
 
 go 1.12
 
