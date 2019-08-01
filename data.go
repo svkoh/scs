@@ -286,7 +286,7 @@ func (s *SessionManager) Keys(ctx context.Context) []string {
 
 // GetToken retrieves the session token for current session,
 // and returns a token string.
-func (s *SessionManager) GetToken(ctx context.Context, token string) (string, error) {
+func (s *SessionManager) GetToken(ctx context.Context) (string, error) {
 	if s, ok := ctx.Value(s.contextKey).(*sessionData); ok {
 		return s.token, nil
 	}
